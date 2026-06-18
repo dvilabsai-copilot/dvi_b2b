@@ -32427,24 +32427,13 @@ if ($total_break_duration > 0) {
                                     $new_total_vehicle_tax_amt = 0;
                                 endif;
 
-                                $TOTAL_VENDOR_MARGIN_AMOUNT = (($OVERALL_TOTAL_VEHICLE_AMOUNT * $vendor_margin_percentage) / 100);
-
-                                if ($vendor_margin_gst_percentage > 0) :
-                                    if ($vendor_margin_gst_type == 1) :
-                                        // For Inclusive GST
-                                        $new_total_margin_amount = $TOTAL_VENDOR_MARGIN_AMOUNT / (1 + ($vendor_margin_gst_percentage / 100));
-                                        $new_total_margin_service_tax_amt = ($TOTAL_VENDOR_MARGIN_AMOUNT - $new_total_margin_amount);
-                                    elseif ($vendor_margin_gst_type == 2) :
-                                        // For Exclusive GST
-                                        $new_total_margin_amount = $TOTAL_VENDOR_MARGIN_AMOUNT;
-                                        $new_total_margin_service_tax_amt = ($TOTAL_VENDOR_MARGIN_AMOUNT * $vendor_margin_gst_percentage / 100);
-                                    endif;
-                                else :
-                                    $new_total_margin_amount = $TOTAL_VENDOR_MARGIN_AMOUNT;
-                                    $new_total_margin_service_tax_amt = 0;
-                                endif;
-
-                                $VEHICLE_GRAND_TOTAL_AMOUNT = ($new_total_vehicle_cost + $new_total_vehicle_tax_amt + $new_total_margin_amount + $new_total_margin_service_tax_amt);
+                                $effective_margin_gst_percentage = ($vendor_margin_gst_percentage >= 1) ? $vendor_margin_gst_percentage : $vehicle_gst_percentage;
+                                $new_total_vehicle_cost = round($OVERALL_TOTAL_VEHICLE_AMOUNT, 2);
+                                $new_total_vehicle_tax_amt = ($vehicle_gst_percentage > 0) ? round(($new_total_vehicle_cost * $vehicle_gst_percentage / 100), 2) : 0;
+                                $vehicle_total_with_gst = $new_total_vehicle_cost + $new_total_vehicle_tax_amt;
+                                $new_total_margin_amount = round(($vehicle_total_with_gst * $vendor_margin_percentage / 100), 2);
+                                $new_total_margin_service_tax_amt = ($effective_margin_gst_percentage > 0) ? round(($new_total_margin_amount * $effective_margin_gst_percentage / 100), 2) : 0;
+                                $VEHICLE_GRAND_TOTAL_AMOUNT = round(($new_total_vehicle_cost + $new_total_vehicle_tax_amt + $new_total_margin_amount + $new_total_margin_service_tax_amt), 2);
 
                                 $vendor_eligible_list_arrFields = array('`total_rental_charges`','`vehicle_gst_amount`', '`vehicle_total_amount`',  '`vendor_margin_amount`', '`vendor_margin_gst_amount`', '`vehicle_grand_total`');
 

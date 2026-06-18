@@ -1688,7 +1688,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                                             $TOTAL_ALLOWED_LOCAL_KM = 0;
                                         else :
                                             $getTIMELIMITID = $getTIMELIMITID;
-                                            $TOTAL_LOCAL_EXTRA_KM = $TOTAL_LOCAL_EXTRA_KM;
+                                            $TOTAL_LOCAL_EXTRA_KM = round($TOTAL_LOCAL_EXTRA_KM);
                                             if ($TOTAL_LOCAL_EXTRA_KM > 0):
                                                 $TOTAL_LOCAL_EXTRA_KM_CHARGES = ($TOTAL_LOCAL_EXTRA_KM * $extra_km_charge);
                                             else:
@@ -1813,7 +1813,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                             $get_extra_kms = ($OVERALL_OUTSTATION_KM - $TOTAL_ITINEARY_ALLOWED_KM);
 
                             if ($get_extra_kms > 0) :
-                                $TOTAL_EXTRA_KM = $get_extra_kms;
+                                $TOTAL_EXTRA_KM = round($get_extra_kms);
                                 $TOTAL_EXTRA_KM_CHARGE = ($TOTAL_EXTRA_KM * $PER_EXTRA_KM_CHARGE);
                             else :
                                 $TOTAL_EXTRA_KM = 0;
@@ -1821,40 +1821,13 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                             endif;
 
                             $OVERALL_TOTAL_VEHICLE_AMOUNT = $OVERALL_TOTAL_VEHICLE_AMOUNT + $TOTAL_EXTRA_KM_CHARGE + $OVERALL_LOCAL_EXTRA_KM_CHARGES;
-
-                            if ($vendor_branch_gst > 0) :
-                                if ($vendor_branch_gst_type == 1) :
-                                    // For Inclusive GST
-                                    $new_total_vehicle_cost = $OVERALL_TOTAL_VEHICLE_AMOUNT / (1 + ($vendor_branch_gst / 100));
-                                    $new_total_vehicle_tax_amt = ($OVERALL_TOTAL_VEHICLE_AMOUNT - $new_total_vehicle_cost);
-                                elseif ($vendor_branch_gst_type == 2) :
-                                    // For Exclusive GST
-                                    $new_total_vehicle_cost = $OVERALL_TOTAL_VEHICLE_AMOUNT;
-                                    $new_total_vehicle_tax_amt = ($OVERALL_TOTAL_VEHICLE_AMOUNT * $vendor_branch_gst / 100);
-                                endif;
-                            else :
-                                $new_total_vehicle_cost = $OVERALL_TOTAL_VEHICLE_AMOUNT;
-                                $new_total_vehicle_tax_amt = 0;
-                            endif;
-
-                            $TOTAL_VENDOR_MARGIN_AMOUNT = (($OVERALL_TOTAL_VEHICLE_AMOUNT * $vendor_margin) / 100);
-
-                            if ($vendor_margin_gst_percentage > 0) :
-                                if ($vendor_margin_gst_type == 1) :
-                                    // For Inclusive GST
-                                    $new_total_margin_amount = $TOTAL_VENDOR_MARGIN_AMOUNT / (1 + ($vendor_margin_gst_percentage / 100));
-                                    $new_total_margin_service_tax_amt = ($TOTAL_VENDOR_MARGIN_AMOUNT - $new_total_margin_amount);
-                                elseif ($vendor_margin_gst_type == 2) :
-                                    // For Exclusive GST
-                                    $new_total_margin_amount = $TOTAL_VENDOR_MARGIN_AMOUNT;
-                                    $new_total_margin_service_tax_amt = ($TOTAL_VENDOR_MARGIN_AMOUNT * $vendor_margin_gst_percentage / 100);
-                                endif;
-                            else :
-                                $new_total_margin_amount = $TOTAL_VENDOR_MARGIN_AMOUNT;
-                                $new_total_margin_service_tax_amt = 0;
-                            endif;
-
-                            $VEHICLE_GRAND_TOTAL_AMOUNT = ($new_total_vehicle_cost + $new_total_vehicle_tax_amt + $new_total_margin_amount + $new_total_margin_service_tax_amt);
+                            $effective_margin_gst_percentage = ($vendor_margin_gst_percentage >= 1) ? $vendor_margin_gst_percentage : $vendor_branch_gst;
+                            $new_total_vehicle_cost = round($OVERALL_TOTAL_VEHICLE_AMOUNT, 2);
+                            $new_total_vehicle_tax_amt = ($vendor_branch_gst > 0) ? round(($new_total_vehicle_cost * $vendor_branch_gst / 100), 2) : 0;
+                            $vehicle_total_with_gst = $new_total_vehicle_cost + $new_total_vehicle_tax_amt;
+                            $new_total_margin_amount = round(($vehicle_total_with_gst * $vendor_margin / 100), 2);
+                            $new_total_margin_service_tax_amt = ($effective_margin_gst_percentage > 0) ? round(($new_total_margin_amount * $effective_margin_gst_percentage / 100), 2) : 0;
+                            $VEHICLE_GRAND_TOTAL_AMOUNT = round(($new_total_vehicle_cost + $new_total_vehicle_tax_amt + $new_total_margin_amount + $new_total_margin_service_tax_amt), 2);
 
                             $array_of_vehicle_cost_for_the_day = $array_of_vehicle_cost_for_the_day ?? [];
 
@@ -1880,7 +1853,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                             $new_total_vehicle_tax_amt = $new_total_vehicle_tax_amt ?? 0;
                             $new_total_vehicle_cost = $new_total_vehicle_cost ?? 0;
                             $vendor_margin = $vendor_margin ?? 0;
-                            $vendor_margin_gst_percentage = $vendor_margin_gst_percentage ?? 0;
+                            $vendor_margin_gst_percentage = $effective_margin_gst_percentage ?? 0;
                             $new_total_margin_amount = $new_total_margin_amount ?? 0;
                             $new_total_margin_service_tax_amt = $new_total_margin_service_tax_amt ?? 0;
                             $VEHICLE_GRAND_TOTAL_AMOUNT = $VEHICLE_GRAND_TOTAL_AMOUNT ?? 0;

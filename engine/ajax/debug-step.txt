@@ -1,0 +1,28 @@
+2026-03-28 10:22:30 STEP 1: file started
+2026-03-28 10:22:30 STEP 2: before set_time_limit
+2026-03-28 10:22:30 STEP 3: before memory_limit
+2026-03-28 10:22:30 STEP 4: before jackus include
+2026-03-28 15:52:30 STEP 5: after jackus include
+2026-03-28 15:52:30 STEP 6: before smtp include
+2026-03-28 10:22:46 STEP 1: file started
+2026-03-28 10:22:46 STEP 2: before set_time_limit
+2026-03-28 10:22:46 STEP 3: before memory_limit
+2026-03-28 10:22:46 STEP 4: before jackus include
+2026-03-28 15:52:46 STEP 5: after jackus include
+2026-03-28 15:52:46 STEP 6: before smtp include
+2026-03-28 10:23:42 STEP 1: file started
+2026-03-28 10:24:56 STEP 1: file started
+2026-03-28 10:24:56 STEP 2: before set_time_limit
+2026-03-28 10:24:56 STEP 3: before memory_limit
+2026-03-28 10:24:56 STEP 4: before jackus include
+2026-03-28 15:54:56 STEP 5: after jackus include
+2026-03-28 15:54:56 STEP 6: before smtp include
+2026-03-28 10:36:50 STEP 1: file started
+2026-03-28 10:36:50 STEP 2: before set_time_limit
+2026-03-28 10:36:50 STEP 3: before memory_limit
+2026-03-28 10:36:50 STEP 4: before jackus include
+2026-03-28 16:06:50 STEP 5: after jackus include
+2026-03-28 16:06:50 STEP 6: before smtp include
+2026-03-28 16:06:50 STEP 7: after smtp include
+2026-03-28 16:06:50 STEP 8: before session_id
+2026-03-28 16:06:50 STEP 9: after session_id

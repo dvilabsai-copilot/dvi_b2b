@@ -76,18 +76,18 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                                     $total_kms = $fetch_eligible_vendor_data['total_kms'];
                                     $vendor_branch_id = $fetch_eligible_vendor_data['vendor_branch_id'];
                                     $vehicle_gst_percentage = $fetch_eligible_vendor_data['vehicle_gst_percentage'];
-                                    $vehicle_total_amount = round($fetch_eligible_vendor_data['vehicle_total_amount']);
-                                    $vehicle_gst_amount = round($fetch_eligible_vendor_data['vehicle_gst_amount']);
+                                    $vehicle_total_amount = round($fetch_eligible_vendor_data['vehicle_total_amount'], 2);
+                                    $vehicle_gst_amount = round($fetch_eligible_vendor_data['vehicle_gst_amount'], 2);
                                     $vendor_margin_percentage = $fetch_eligible_vendor_data['vendor_margin_percentage'];
                                     $vendor_margin_gst_type = $fetch_eligible_vendor_data['vendor_margin_gst_type'];
-                                    $vendor_margin_gst_percentage = $fetch_eligible_vendor_data['vendor_margin_gst_percentage'];
-                                    $vendor_margin_amount = round($fetch_eligible_vendor_data['vendor_margin_amount']);
-                                    $vendor_margin_gst_amount = round($fetch_eligible_vendor_data['vendor_margin_gst_amount']);
-                                    $total_extra_kms_charge = round($fetch_eligible_vendor_data['total_extra_kms_charge']);
+                                    $vendor_margin_gst_percentage = ($fetch_eligible_vendor_data['vendor_margin_gst_percentage'] >= 1) ? $fetch_eligible_vendor_data['vendor_margin_gst_percentage'] : $vehicle_gst_percentage;
+                                    $vendor_margin_amount = round($fetch_eligible_vendor_data['vendor_margin_amount'], 2);
+                                    $vendor_margin_gst_amount = round($fetch_eligible_vendor_data['vendor_margin_gst_amount'], 2);
+                                    $total_extra_kms_charge = round($fetch_eligible_vendor_data['total_extra_kms_charge'], 2);
                                     $total_allowed_local_kms = round($fetch_eligible_vendor_data['total_allowed_local_kms']);
                                     $total_extra_local_kms = round($fetch_eligible_vendor_data['total_extra_local_kms']);
-                                    $total_extra_local_kms_charge = round($fetch_eligible_vendor_data['total_extra_local_kms_charge']);
-                                    $vehicle_grand_total = round($fetch_eligible_vendor_data['vehicle_grand_total']);
+                                    $total_extra_local_kms_charge = round($fetch_eligible_vendor_data['total_extra_local_kms_charge'], 2);
+                                    $vehicle_grand_total = round($fetch_eligible_vendor_data['vehicle_grand_total'], 2);
                                     $total_outstation_km = $fetch_eligible_vendor_data['total_outstation_km'];
                                     $total_allowed_kms = $fetch_eligible_vendor_data['total_allowed_kms'];
                                     $total_rental_charges = round($fetch_eligible_vendor_data['total_rental_charges']);
@@ -515,7 +515,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                                                 </tr>
                                             <?php endif; ?>
                                             <tr class="d-none vendor_details_<?= $vendor_counter; ?>">
-                                                <td colspan="5" class="text-end">TOTAL EXTARA KM</td>
+                                                <td colspan="5" class="text-end">TOTAL EXTRA KM</td>
                                                 <td class="text-center"><?= number_format(($total_extra_kms + $total_extra_local_kms), 0, '.', '') . ' * ' . general_currency_symbol . ' ' . number_format($extra_km_rate, 2); ?></td>
                                                 <td class="text-end"><?= general_currency_symbol . ' ' . number_format(($total_extra_kms_charge + $total_extra_local_kms_charge), 2); ?></td>
                                             </tr>

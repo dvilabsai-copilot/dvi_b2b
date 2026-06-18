@@ -1,0 +1,56 @@
+2026-03-28 15:52:30 FATAL: Array
+(
+    [type] => 1
+    [message] => Uncaught Error: Failed opening required 'phpmailer_vendor/autoload.php' (include_path='.;C:\php\pear') in C:\wamp64\www\dvi_b2b\smtp_functions.php:9
+Stack trace:
+#0 C:\wamp64\www\dvi_b2b\engine\ajax\ajax_latest_manage_itineary.php(39): include_once()
+#1 {main}
+  thrown
+    [file] => C:\wamp64\www\dvi_b2b\smtp_functions.php
+    [line] => 9
+)
+
+2026-03-28 15:52:46 FATAL: Array
+(
+    [type] => 1
+    [message] => Uncaught Error: Failed opening required 'phpmailer_vendor/autoload.php' (include_path='.;C:\php\pear') in C:\wamp64\www\dvi_b2b\smtp_functions.php:9
+Stack trace:
+#0 C:\wamp64\www\dvi_b2b\engine\ajax\ajax_latest_manage_itineary.php(38): include_once()
+#1 {main}
+  thrown
+    [file] => C:\wamp64\www\dvi_b2b\smtp_functions.php
+    [line] => 9
+)
+
+2026-03-28 15:53:42 Array
+(
+    [type] => 1
+    [message] => Uncaught Error: Failed opening required 'phpmailer_vendor/autoload.php' (include_path='.;C:\php\pear') in C:\wamp64\www\dvi_b2b\smtp_functions.php:9
+Stack trace:
+#0 C:\wamp64\www\dvi_b2b\engine\ajax\ajax_latest_manage_itineary.php(29): include_once()
+#1 {main}
+  thrown
+    [file] => C:\wamp64\www\dvi_b2b\smtp_functions.php
+    [line] => 9
+)
+
+2026-03-28 15:54:56 FATAL: Array
+(
+    [type] => 1
+    [message] => Uncaught Error: Failed opening required 'phpmailer_vendor/autoload.php' (include_path='.;C:\php\pear') in C:\wamp64\www\dvi_b2b\smtp_functions.php:9
+Stack trace:
+#0 C:\wamp64\www\dvi_b2b\engine\ajax\ajax_latest_manage_itineary.php(39): include_once()
+#1 {main}
+  thrown
+    [file] => C:\wamp64\www\dvi_b2b\smtp_functions.php
+    [line] => 9
+)
+
+2026-03-28 16:06:50 FATAL: Array
+(
+    [type] => 2
+    [message] => include_once(): Failed opening 'controller/core/report_functions.php' for inclusion (include_path='.;C:\php\pear')
+    [file] => C:\wamp64\www\dvi_b2b\jackus.php
+    [line] => 83
+)
+
